@@ -23,18 +23,20 @@
               </tr>
             </thead>
             <tbody>
+              @foreach($specialties as $specialty)
               <tr>
                 <th scope="row">
-                  Oftalmología
+                  {{ $specialty->name }}
                 </th>
                 <td>
-                  -
+                  {{ $specialty->description }}
                 </td>
                 <td>
-                  <a href="" class="btn btn-sm btn-primary">Editar</a>
+                  <a href="{{ url('/specialties/'.$specialty->id.'/edit') }}" class="btn btn-sm btn-primary">Editar</a>
                   <a href="" class="btn btn-sm btn-danger">Editar</a>
                 </td>
               </tr>
+              @endforeach
             </tbody>
           </table>
         </div>
