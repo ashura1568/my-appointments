@@ -33,3 +33,12 @@ Route::put('/specialties/{specialty}', [\App\Http\Controllers\SpecialtyControlle
 
 Route::delete('/specialties/{specialty}', [\App\Http\Controllers\SpecialtyController::class, 'destroy']);
 
+
+//Doctors
+
+//Route::resource('doctors','DoctorController');
+use App\Http\Controllers\DoctorController;
+Route::resource('/doctors', DoctorController::class);
+
+
+//Patients

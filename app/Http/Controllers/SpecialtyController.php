@@ -23,10 +23,8 @@ class SpecialtyController extends Controller
         return view('specialties.create');
     }
 
-    public function store(Request $request)
-    {   
-        // dd($request->all());
-
+    public function performValidation(Request $request)
+    {
         $rules=[
             'name' => 'required|min:3'
         ];
@@ -37,13 +35,21 @@ class SpecialtyController extends Controller
         ];
 
         $this->validate($request, $rules, $messages);
+    }
+
+    public function store(Request $request)
+    {   
+        // dd($request->all());
+
+        $this->performValidation($request);
 
         $specialty = new Specialty();
         $specialty->name = $request->input('name');
         $specialty->description = $request->input('description');
         $specialty->save();//INSERT
 
-        return redirect('/specialties');
+        $notification = 'La especialidad se ha registrado correctamente.';
+        return redirect('/specialties')->with(compact('notification'));
         
     }
 
@@ -57,22 +63,27 @@ class SpecialtyController extends Controller
     {   
         // dd($request->all());
 
-        $rules=[
-            'name' => 'required|min:3'
-        ];
-
-        $messages=[
-            'name.required' => 'Es necesario ingresar un nombre.',
-            'name.min' => 'Como minimo el nombre debe tener 3 caracteres',
-        ];
-
-        $this->validate($request, $rules, $messages);
+        $this->performValidation($request);
 
         $specialty->name = $request->input('name');
         $specialty->description = $request->input('description');
         $specialty->save();//UPDATE
 
-        return redirect('/specialties');
+        $notification = 'La especialidad se ha modificado correctamente.';
+        return redirect('/specialties')->with(compact('notification'));
+        
+        
+    }
+
+    public function destroy(Specialty $specialty)
+    {   
+        // dd($request->all());
+        $deletedSpecialty = $specialty->name;
+        $specialty->delete();
+
+        $notification = 'La especialidad '.$deletedSpecialty.' se ha eliminado correctamente.';
+        return redirect('/specialties')->with(compact('notification'));
+        
         
     }
 }
