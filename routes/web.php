@@ -42,3 +42,5 @@ Route::resource('/doctors', DoctorController::class);
 
 
 //Patients
+use App\Http\Controllers\PatientController;
+Route::resource('/patients', PatientController::class);
