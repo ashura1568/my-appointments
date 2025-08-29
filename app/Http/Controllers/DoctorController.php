@@ -24,7 +24,8 @@ class DoctorController extends Controller
      * Show the form for creating a new resource.
      */
     public function create()
-    {
+    {   
+
         return view('doctors.create');
     }
 
@@ -33,7 +34,27 @@ class DoctorController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $rules=[
+        'name' => 'required|min:3',
+        'email' => 'required|email',
+        'dni' => 'nullable|digits:8',
+        'address' => 'nullable|min:5',
+        'phone' => 'nullable|min:6'
+        ];
+
+        $this->validate($request, $rules);
+        
+        //mass assigment
+        User::create(
+            $request->only('name','email','dni','address','phone')
+            + [
+                'role' => 'doctor',
+                'password' => bcrypt($request->input('password'))
+            ]
+        );
+
+        $notification = 'El medico se ha registrado correctamente.';
+        return redirect('/doctors')->with(compact('notification'));
     }
 
     /**
@@ -47,9 +68,10 @@ class DoctorController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit($id)
     {
-        //
+        $doctor = User::doctors()->findOrFail($id);
+        return view('doctors.edit',compact('doctor'));
     }
 
     /**
