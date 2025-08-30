@@ -60,5 +60,9 @@
             </tbody>
           </table>
         </div>
+        <div class="card-body">
+        {{ $patients->links() }} 
+        </div>
+
       </div>
 @endsection

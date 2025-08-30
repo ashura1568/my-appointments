@@ -22,28 +22,28 @@
     </ul> 
     @endif
 
-    <form action="{{ url('doctors') }}" method="post">
+    <form action="{{ url('doctors/'.$doctor->id) }}" method="post">
       @csrf
       @method('PUT')
             <div class="form-group">
                 <label for="name">Nombre del medico</label>
-                <input type="text" name="name" class="form-control" value="{{ old('name, $doctor->name') }}" required>
+                <input type="text" name="name" class="form-control" value="{{ old('name', $doctor->name) }}" required>
             </div>
             <div class="form-group">
                 <label for="email">Email</label>
-                <input type="text" name="email" class="form-control" value="{{ old('email, $doctor->email') }}">
+                <input type="text" name="email" class="form-control" value="{{ old('email', $doctor->email) }}">
             </div>
             <div class="form-group">
                 <label for="dni">DNI</label>
-                <input type="text" name="dni" class="form-control" value="{{ old('dni, $doctor->dni') }}">
+                <input type="text" name="dni" class="form-control" value="{{ old('dni', $doctor->dni) }}">
             </div>
             <div class="form-group">
                 <label for="address">Direccion</label>
-                <input type="text" name="address" class="form-control" value="{{ old('address, $doctor->address') }}">
+                <input type="text" name="address" class="form-control" value="{{ old('address', $doctor->address) }}">
             </div>
             <div class="form-group">
                 <label for="phone">Telefono / movil</label>
-                <input type="text" name="phone" class="form-control" value="{{ old('phone, $doctor->phone') }}">
+                <input type="text" name="phone" class="form-control" value="{{ old('phone', $doctor->phone) }}">
             </div>
             <div class="form-group">
                 <label for="phone">Contraseña </label>
