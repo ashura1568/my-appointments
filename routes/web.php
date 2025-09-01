@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\DoctorController;
 use App\Http\Controllers\Admin\PatientController;
+use App\Http\Controllers\Doctor\ScheduleController;
 use App\Http\Middleware\MiMiddlewarePersonalizado;
 
 Route::get('/', function () {
@@ -53,4 +54,8 @@ Route::resource('/doctors', DoctorController::class);
 
 Route::resource('/patients', PatientController::class);
 
+});
+Route::middleware(['auth','doctor'])->group(function () {
+
+Route::get('/schedule', [\App\Http\Controllers\Doctor\ScheduleController::class, 'edit']);
 });
