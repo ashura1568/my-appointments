@@ -58,4 +58,7 @@ Route::resource('/patients', PatientController::class);
 Route::middleware(['auth','doctor'])->group(function () {
 
 Route::get('/schedule', [\App\Http\Controllers\Doctor\ScheduleController::class, 'edit']);
+
+Route::post('/schedule', [\App\Http\Controllers\Doctor\ScheduleController::class, 'store']);
+
 });
