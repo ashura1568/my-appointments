@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\DoctorController;
 use App\Http\Controllers\Admin\PatientController;
 use App\Http\Controllers\Doctor\ScheduleController;
+use App\Http\Controllers\AppointmentController;
 use App\Http\Middleware\MiMiddlewarePersonalizado;
 
 Route::get('/', function () {
@@ -62,3 +63,7 @@ Route::get('/schedule', [\App\Http\Controllers\Doctor\ScheduleController::class,
 Route::post('/schedule', [\App\Http\Controllers\Doctor\ScheduleController::class, 'store']);
 
 });
+
+
+Route::get('/appointments/create', [\App\Http\Controllers\AppointmentController::class, 'create']);
+Route::post('/appointments', [\App\Http\Controllers\AppointmentController::class, 'store']);

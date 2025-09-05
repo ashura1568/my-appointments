@@ -44,13 +44,13 @@ Menu
   </li>
   @else
   <li class="nav-item">
-    <a class="nav-link" href="/home">
-      <i class="ni ni-tv-2 text-danger"></i> Reservar cita
+    <a class="nav-link" href="/appointments/create">
+      <i class="ni ni-send text-danger"></i> Reservar cita
     </a>
   </li> 
   <li class="nav-item">
-    <a class="nav-link" href="/specialties">
-      <i class="ni ni-lst text-blue"></i> Mis citas
+    <a class="nav-link" href="/appointments">
+      <i class="ni ni-time-alarm text-primary"></i> Mis citas
     </a>
   </li>
  
