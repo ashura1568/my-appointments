@@ -50,6 +50,12 @@ class User extends Authenticatable
         ];
     }
 
+    // $user->specialties
+    public function specialties()
+    {
+        return $this->belongsToMany(Specialty::class)->withTimestamps();
+    }
+
     public function scopePatients($query)
     {
         return $query->where('role','patient');
