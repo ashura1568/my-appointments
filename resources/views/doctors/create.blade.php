@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.panel')
 
 @section('styles')
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.2/css/bootstrap-select.min.css">
@@ -18,13 +18,14 @@
         </div>
         <div class="card-body">
     @if ($errors->any())
-    <div class="alert alert-danger" role="alert">
-      @foreach ($errors->all() as $error)
-
-      <li>{{ $error }}</li>
-      @endforeach
-    </ul> 
-    @endif
+        <div class="alert alert-danger" role="alert">
+          <ul>
+            @foreach ($errors->all() as $error)
+              <li>{{ $error }}</li>
+            @endforeach
+          </ul>
+        </div>
+      @endif
 
     <form action="{{ url('doctors') }}" method="post">
       @csrf
@@ -60,8 +61,7 @@
             @endforeach
           </select>
         </div>
-            
-            <button type="submit" class="btn btn-primary">Guardar</button>
+        <button type="submit" class="btn btn-primary">Guardar</button>
         </form>
 
         </div>

@@ -38,26 +38,27 @@ class DoctorController extends Controller
      */
     public function store(Request $request)
     {
-        $rules=[
-        'name' => 'required|min:3',
-        'email' => 'required|email',
-        'dni' => 'nullable|digits:8',
-        'address' => 'nullable|min:5',
-        'phone' => 'nullable|min:6'
+        // dd($request->all());
+        $rules = [
+            'name' => 'required|min:3',
+            'email' => 'required|email',
+            'dni' => 'nullable|digits:8',
+            'address' => 'nullable|min:5',
+            'phone' => 'nullable|min:6'
         ];
-
         $this->validate($request, $rules);
-        
-        //mass assigment
-        User::create(
-            $request->only('name','email','dni','address','phone')
+
+        $user = User::create(
+            $request->only('name', 'email', 'dni', 'address', 'phone')
             + [
                 'role' => 'doctor',
                 'password' => bcrypt($request->input('password'))
             ]
         );
 
-        $notification = 'El medico se ha registrado correctamente.';
+        $user->specialties()->attach($request->input('specialties'));
+
+        $notification = 'El médico se ha registrado correctamente.';
         return redirect('/doctors')->with(compact('notification'));
     }
 
@@ -75,7 +76,10 @@ class DoctorController extends Controller
     public function edit($id)
     {
         $doctor = User::doctors()->findOrFail($id);
-        return view('doctors.edit',compact('doctor'));
+        $specialties = Specialty::all();
+
+        $specialty_ids = $doctor->specialties()->pluck('specialties.id');
+        return view('doctors.edit', compact('doctor', 'specialties','specialty_ids'));
     }
 
     /**
@@ -103,6 +107,8 @@ class DoctorController extends Controller
         $user->fill($data);
         $user->save();//UPDATE
 
+        $user->specialties()->sync($request->input('specialties'));
+        
         $notification = 'El medico se ha modificado correctamente.';
         return redirect('/doctors')->with(compact('notification'));
     }
