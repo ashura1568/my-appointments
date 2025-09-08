@@ -58,10 +58,13 @@
               </div>
             <input class="form-control datepicker" placeholder="Seleccionar fecha" 
               id="date" name="scheduled_date" type="text" 
-              value="06/20/2018">
-              
+              value="{{ old('scheduled_date', date('Y-m-d')) }}" 
+              data-date-format="yyyy-mm-dd" 
+              data-date-start-date="{{ date('Y-m-d') }}" 
+              data-date-end-date="+30d">
           </div>
         </div>
+        
         <div class="form-group">
           <label for="address">Hora de atención</label>
           <div id="hours">
