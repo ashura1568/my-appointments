@@ -17,18 +17,26 @@ class ScheduleController extends Controller
 
      public function edit()
     {   
-        $workDays = WorkDay::where('user_id',auth()->id())->get();
-       
-        $workDays->map(function($workDay){
-            $workDay->morning_start = (new Carbon($workDay->morning_start))->format('g:i A');
-            $workDay->morning_end = (new Carbon($workDay->morning_end))->format('g:i A');
-            $workDay->afternoon_start = (new Carbon($workDay->afternoon_start))->format('g:i A');
-            $workDay->afternoon_end = (new Carbon($workDay->afternoon_end))->format('g:i A');
-            return $workDay;
-        });
-         //dd($workDays->toArray());
-         $days = $this->days;
-        return view('schedule', compact('workDays','days'));
+        $workDays = WorkDay::where('user_id', auth()->id())->get();
+
+        if (count($workDays) > 0) {
+            $workDays->map(function ($workDay) {
+                $workDay->morning_start = (new Carbon($workDay->morning_start))->format('g:i A');
+                $workDay->morning_end = (new Carbon($workDay->morning_end))->format('g:i A');
+                $workDay->afternoon_start = (new Carbon($workDay->afternoon_start))->format('g:i A');
+                $workDay->afternoon_end = (new Carbon($workDay->afternoon_end))->format('g:i A');
+                return $workDay;
+            });
+        } else {
+            $workDays = collect();
+            for ($i=0; $i<7; ++$i)
+                $workDays->push(new WorkDay());
+        }
+    	
+    	
+    	// dd($workDays->toArray());
+    	$days = $this->days;
+    	return view('schedule', compact('workDays', 'days'));
     }
 
      public function store(Request $request)
