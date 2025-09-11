@@ -1,7 +1,7 @@
 <?php
-//namespace Database\Seeders;
+
 use Illuminate\Database\Seeder;
-use App\Models\User;
+use App\User;
 
 class UsersTableSeeder extends Seeder
 {
@@ -14,29 +14,28 @@ class UsersTableSeeder extends Seeder
     {
         // 1
     	User::create([
-    		'name' => 'Andres Molina',
-	        'email' => 'hola@mail.com',
-	        'password' => bcrypt('123'),
+    		'name' => 'Juan Ramos',
+	        'email' => 'hola@programacionymas.com',
+	        'password' => bcrypt('123123'),
 	        'role' => 'admin'
     	]);
 
         // 2
         User::create([
             'name' => 'Paciente Test',
-            'email' => 'hola3@mail.com',
-            'password' => bcrypt('123'),
+            'email' => 'patient@programacionymas.com',
+            'password' => bcrypt('123123'),
             'role' => 'patient'
         ]);
 
         // 3
         User::create([
             'name' => 'Médico Test',
-            'email' => 'hola2@mail.com',
-            'password' => bcrypt('123'),
+            'email' => 'doctor@programacionymas.com',
+            'password' => bcrypt('123123'),
             'role' => 'doctor'
         ]);
 
-        User::factory(50)->create();
-        //factory(User::class, 50)->states('patient')->create();
+        factory(User::class, 50)->states('patient')->create();
     }
 }

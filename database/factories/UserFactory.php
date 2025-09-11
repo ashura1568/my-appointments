@@ -46,4 +46,14 @@ class UserFactory extends Factory
             'email_verified_at' => null,
         ]);
     }
+
+
+    /*$factory->state(App\User::class, 'patient', [
+    'role' => 'patient'
+]);
+
+$factory->state(App\User::class, 'doctor', [
+    'role' => 'doctor'
+]);*/
+
 }

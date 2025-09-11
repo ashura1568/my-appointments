@@ -70,6 +70,8 @@
           <div id="hours">
             
           </div>
+
+          
         </div>
         <div class="form-group">
           <label for="type">Tipo de consulta</label>
