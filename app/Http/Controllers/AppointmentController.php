@@ -3,13 +3,17 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+
+use App\Interfaces\ScheduleServiceInterface;
+
 use App\Models\Specialty;
 use App\Models\Appointment;
 use Carbon\Carbon;
 
 class AppointmentController extends Controller
 {
-    public function create()
+
+    /*public function create(ScheduleServiceInterface $scheduleService)
     {
     	$specialties = Specialty::all();
 
@@ -20,17 +24,40 @@ class AppointmentController extends Controller
         } else {
             $doctors = collect();
         }
-        /*
+        
         $date = old('scheduled_date');
         $doctorId = old('doctor_id');
         if ($date && $doctorId) {
             $intervals = $scheduleService->getAvailableIntervals($date, $doctorId);
         } else {
             $intervals = null;
-        }*/
+        }
         
-    	//return view('appointments.create', compact('specialties', 'doctors', 'intervals'));
-        return view('appointments.create', compact('specialties','doctors'));
+    	return view('appointments.create', compact('specialties', 'doctors', 'intervals'));
+    }*/
+
+    public function create(ScheduleServiceInterface $scheduleService)
+    {
+    	$specialties = Specialty::all();
+
+        $specialtyId = old('specialty_id');
+        if ($specialtyId) {
+            $specialty = Specialty::find($specialtyId);
+            $doctors = $specialty->users;
+        } else {
+            $doctors = collect();
+        }
+        
+        $date = old('scheduled_date');
+        $doctorId = old('doctor_id');
+        if ($date && $doctorId) {
+            $intervals = $scheduleService->getAvailableIntervals($date, $doctorId);
+        } else {
+            $intervals = null;
+        }
+        
+    	return view('appointments.create', compact('specialties', 'doctors', 'intervals'));
+        //return view('appointments.create', compact('specialties','doctors'));
     }
 
     public function store(Request $request)
