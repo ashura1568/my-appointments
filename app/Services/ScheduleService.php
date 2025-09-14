@@ -3,7 +3,7 @@
 use App\Interfaces\ScheduleServiceInterface;
 use Carbon\Carbon;
 use App\Models\WorkDay;
-//use App\Appointment;
+use App\Models\Appointment;
 
 class ScheduleService implements ScheduleServiceInterface
 {
@@ -17,17 +17,14 @@ class ScheduleService implements ScheduleServiceInterface
         return !$exists; // available if already none exists
     }*/
 
-    private function getDayFromDate($date)
-	{
-    	$dateCarbon = new Carbon($date);
+    public function isAvailableInterval($date, $doctorId, Carbon $start) {
+        $exists = Appointment::where('doctor_id', $doctorId)
+                ->where('scheduled_date', $date)
+                ->where('scheduled_time', $start->format('H:i:s'))
+                ->exists();
 
-    	// dayofWeek
-    	// Carbon: 0 (sunday) - 6 (saturday)
-    	// WorkDay: 0 (monday) - 6 (sunday)
-    	$i = $dateCarbon->dayOfWeek;
-    	$day = ($i==0 ? 6 : $i-1);
-    	return $day;
-	}
+        return !$exists; // available if already none exists
+    }
 
     public function getAvailableIntervals($date, $doctorId)
     {
@@ -61,7 +58,19 @@ class ScheduleService implements ScheduleServiceInterface
         return $data;
     }
 
-    private function getIntervals($start, $end) {
+     private function getDayFromDate($date)
+	{
+    	$dateCarbon = new Carbon($date);
+
+    	// dayofWeek
+    	// Carbon: 0 (sunday) - 6 (saturday)
+    	// WorkDay: 0 (monday) - 6 (sunday)
+    	$i = $dateCarbon->dayOfWeek;
+    	$day = ($i==0 ? 6 : $i-1);
+    	return $day;
+	}
+
+    private function getIntervals($start, $end,$date, $doctorId) {
 		$start = new Carbon($start);
     	$end = new Carbon($end);
 
@@ -72,10 +81,14 @@ class ScheduleService implements ScheduleServiceInterface
 
     		$interval['start']  = $start->format('g:i A');
 
+            $available = $this->isAvailableInterval($date, $doctorId, $start);
+
     		$start->addMinutes(30);
     		$interval['end']  = $start->format('g:i A');
 
-            $intervals []= $interval;           
+            if ($available) {
+                $intervals []= $interval;           
+            }            
               		
     	}
 
