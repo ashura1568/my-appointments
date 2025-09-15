@@ -37,6 +37,51 @@ class AppointmentController extends Controller
     	return view('appointments.create', compact('specialties', 'doctors', 'intervals'));
     }*/
 
+    public function index()
+    {
+        /*$role = auth()->user()->role;
+
+        if ($role == 'admin') { 
+            $pendingAppointments = Appointment::where('status', 'Reservada')
+                ->paginate(10);
+            $confirmedAppointments = Appointment::where('status', 'Confirmada')
+                ->paginate(10);
+            $oldAppointments = Appointment::whereIn('status', ['Atendida', 'Cancelada'])
+                ->paginate(10);
+
+        } elseif ($role == 'doctor') {
+            $pendingAppointments = Appointment::where('status', 'Reservada')
+                ->where('doctor_id', auth()->id())
+                ->paginate(10);
+            $confirmedAppointments = Appointment::where('status', 'Confirmada')
+                ->where('doctor_id', auth()->id())
+                ->paginate(10);
+            $oldAppointments = Appointment::whereIn('status', ['Atendida', 'Cancelada'])
+                ->where('doctor_id', auth()->id())
+                ->paginate(10);
+
+        } elseif ($role == 'patient') {
+            $pendingAppointments = Appointment::where('status', 'Reservada')
+                ->where('patient_id', auth()->id())
+                ->paginate(10);
+            $confirmedAppointments = Appointment::where('status', 'Confirmada')
+                ->where('patient_id', auth()->id())
+                ->paginate(10);
+            $oldAppointments = Appointment::whereIn('status', ['Atendida', 'Cancelada'])
+                ->where('patient_id', auth()->id())
+                ->paginate(10);
+        }*/
+        
+        $appointments = Appointment::paginate(10);
+        return view('appointments.index', 
+            compact(
+                'appointments'
+                //'pendingAppointments', 'confirmedAppointments', 'oldAppointments',
+                //'role'
+            )
+        );
+    }
+
     public function create(ScheduleServiceInterface $scheduleService)
     {
     	$specialties = Specialty::all();
