@@ -72,11 +72,22 @@ class AppointmentController extends Controller
                 ->paginate(10);
         }*/
         
-        $appointments = Appointment::paginate(10);
+        $pendingAppointments = Appointment::where('status','Reservada')
+        ->where('patient_id',auth()->id())
+        ->paginate(10);
+        $confirmedAppointments = Appointment::where('status','Confirmada')
+        ->where('patient_id',auth()->id())
+        ->paginate(10);
+        $oldAppointments = Appointment::whereIn('status',['Atendida','Cancelada'])
+        ->where('patient_id',auth()->id())
+        ->paginate(10);
+
         return view('appointments.index', 
             compact(
-                'appointments'
-                //'pendingAppointments', 'confirmedAppointments', 'oldAppointments',
+                //'appointments',
+                'pendingAppointments', 
+                'confirmedAppointments', 
+                'oldAppointments'
                 //'role'
             )
         );
@@ -175,5 +186,14 @@ class AppointmentController extends Controller
 
     	return back()->with(compact('notification'));*/
     	
+    }
+
+    public function cancel(Appointment $appointment){
+        $appointment->status=('Cancelada');
+        $appointment->save();//update
+
+        $notification = 'La cita se ha cancelado correctamente.';
+        return back()->with(compact('notification'));
+
     }
 }
