@@ -84,8 +84,11 @@ Route::middleware('auth')->group(function () {
     Route::get('/appointments/create', [\App\Http\Controllers\AppointmentController::class, 'create']);
     Route::post('/appointments', [\App\Http\Controllers\AppointmentController::class, 'store']);
 	Route::get('/appointments', [\App\Http\Controllers\AppointmentController::class, 'index']);
+
+	Route::get('/appointments/{appointment}', [\App\Http\Controllers\AppointmentController::class, 'show']);
 	
-	Route::post('/appointments/{appointment}/cancel', [\App\Http\Controllers\AppointmentController::class, 'cancel']);
+	Route::get('/appointments/{appointment}/cancel', [\App\Http\Controllers\AppointmentController::class, 'showCancelForm']);
+	Route::post('/appointments/{appointment}/cancel', [\App\Http\Controllers\AppointmentController::class, 'postCancel']);
 
     Route::get('/specialties/{specialty}/doctors', [\App\Http\Controllers\Api\SpecialtyController::class, 'doctors']);
     Route::get('/schedule/hours', [\App\Http\Controllers\Api\ScheduleController::class, 'hours']);
