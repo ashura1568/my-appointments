@@ -5,7 +5,11 @@
               <tr>
                 <th scope="col">Descripcion</th>
                 <th scope="col">Especialidad</th>
-                <th scope="col">Medico</th>
+                @if ($role == 'patient')
+                <th scope="col">Médico</th>
+                @elseif ($role == 'doctor')
+                <th scope="col">Paciente</th>
+                  @endif
                 <th scope="col">Fecha</th>
                 <th scope="col">Hora</th>
                 <th scope="col">Tipo</th>
@@ -21,9 +25,11 @@
                 <td>
                   {{ $appointment->specialty->name }}
                 </td>
-                <td>
-                  {{ $appointment->doctor->name }}
-                </td>
+                @if ($role == 'patient')
+                <td>{{ $appointment->doctor->name }}</td>
+                @elseif ($role == 'doctor')
+                <td>{{ $appointment->patient->name }}</td>
+                @endif
                 <td>
                   {{ $appointment->scheduled_date }}
                 </td>

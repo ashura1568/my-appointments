@@ -8,7 +8,8 @@ use App\Http\Controllers\AppointmentController;
 use App\Http\Middleware\MiMiddlewarePersonalizado;
 
 Route::get('/', function () {
-    return view('welcome');
+	return redirect('/login');
+    //return view('welcome');
 });
 
 Auth::routes();
