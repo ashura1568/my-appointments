@@ -39,17 +39,17 @@
 
         </div>
 
-         <div class="tab-content" id="pills-tabContent">
-        <div class="tab-pane fade show active" id="confirmed-appointments" role="tabpanel">
-        @include('appointments.confirmed-appointments')
-        </div>
-        <div class="tab-pane fade" id="pending-appointments" role="tabpanel">
-        @include('appointments.pending-appointments')
-        </div>
-        <div class="tab-pane fade" id="old-appointments" role="tabpanel">
-        @include('appointments.old-appointments')
-        </div>
-        </div>
+         <<div class="tab-content" id="pills-tabContent">
+      <div class="tab-pane fade show active" id="confirmed-appointments" role="tabpanel">
+        @include('appointments.tables.confirmed')
+      </div>
+      <div class="tab-pane fade" id="pending-appointments" role="tabpanel">
+        @include('appointments.tables.pending')
+      </div>
+      <div class="tab-pane fade" id="old-appointments" role="tabpanel">
+        @include('appointments.tables.old')
+      </div>
+    </div>
 
       </div>
 @endsection

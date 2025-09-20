@@ -42,7 +42,7 @@ class AppointmentController extends Controller
     {
         $role = auth()->user()->role;
 
-        /*if ($role == 'admin') { 
+        if ($role == 'admin') { 
             $pendingAppointments = Appointment::where('status', 'Reservada')
                 ->paginate(10);
             $confirmedAppointments = Appointment::where('status', 'Confirmada')
@@ -50,7 +50,7 @@ class AppointmentController extends Controller
             $oldAppointments = Appointment::whereIn('status', ['Atendida', 'Cancelada'])
                 ->paginate(10);
 
-        } else*/if ($role == 'doctor') {
+        } elseif ($role == 'doctor') {
             $pendingAppointments = Appointment::where('status', 'Reservada')
                 ->where('doctor_id', auth()->id())
                 ->paginate(10);
@@ -86,9 +86,9 @@ class AppointmentController extends Controller
 
     public function show(Appointment $appointment)
     {
-        //$role = auth()->user()->role;
-        //return view('appointments.show', compact('appointment', 'role'));
-        return view('appointments.show', compact('appointment'));
+        $role = auth()->user()->role;
+        return view('appointments.show', compact('appointment', 'role'));
+        
     }
 
     public function create(ScheduleServiceInterface $scheduleService)
@@ -215,4 +215,19 @@ class AppointmentController extends Controller
         return redirect('/appointments')->with(compact('notification'));
 
     }
+
+    public function postConfirm(Appointment $appointment)
+    {
+        $appointment->status = 'Confirmada';
+        $saved = $appointment->save(); // update
+
+        /*if ($saved)        
+            $appointment->patient->sendFCM('Su cita se ha confirmado!');*/
+
+        $notification = 'La cita se ha confirmado correctamente.';
+        return redirect('/appointments')->with(compact('notification'));
+    }
+
+
+
 }

@@ -9,7 +9,7 @@
                 <th scope="col">Médico</th>
                 @elseif ($role == 'doctor')
                 <th scope="col">Paciente</th>
-                @endif
+                  @endif
                 <th scope="col">Fecha</th>
                 <th scope="col">Hora</th>
                 <th scope="col">Tipo</th>
@@ -17,7 +17,7 @@
               </tr>
             </thead>
             <tbody>
-              @foreach($confirmedAppointments as $appointment)
+              @foreach($pendingAppointments as $appointment)
               <tr>
                 <th scope="row">
                   {{ $appointment->description }}
@@ -39,10 +39,34 @@
                 <td>
                   {{ $appointment->type }}
                 </td>
-                
                 <td>
-                    <a class="btn btn-sm btn-danger" title="Cancelar cita"
-                    href="{{ url('/appointments/'.$appointment->id.'/cancel') }}">Cancelar</a>
+                  @if ($role == 'admin')
+                 <a class="btn btn-sm btn-primary" title="Ver cita" 
+               href="{{ url('/appointments/'.$appointment->id) }}">
+                Ver
+                 </a>
+                @endif
+                  @if ($role == 'doctor' || $role == 'admin')
+                  <form action="{{ url('/appointments/'.$appointment->id.'/confirm') }}"
+              method="POST" class="d-inline-block">
+              @csrf
+
+              <button class="btn btn-sm btn-success" type="submit" 
+                data-toggle="tooltip" title="Confirmar cita">
+                <i class="ni ni-check-bold"></i>
+              </button>
+            </form>
+             @endif 
+
+            <form action="{{ url('/appointments/'.$appointment->id.'/cancel') }}" 
+            method="POST" class="d-inline-block">
+            @csrf
+
+            <button class="btn btn-sm btn-danger" type="submit" 
+              data-toggle="tooltip" title="Cancelar cita">
+              <i class="ni ni-fat-delete"></i>
+            </button>
+          </form> 
                 </td>
               </tr>
               @endforeach
@@ -50,6 +74,6 @@
           </table>
         </div>
 
-        <div class="card-body">
-        {{ $confirmedAppointments->links() }} 
+<div class="card-body">
+        {{ $pendingAppointments->links() }} 
         </div>
