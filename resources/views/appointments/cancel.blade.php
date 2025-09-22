@@ -19,12 +19,31 @@
         </div>
           @endif
         
-        <p>
+         @if ($role == 'patient')
+      <p>
         Estás a punto de cancelar tu cita reservada con el médico 
         {{ $appointment->doctor->name }} 
         (especialidad {{ $appointment->specialty->name }}) 
         para el día {{ $appointment->scheduled_date }}:
       </p>
+      @elseif ($role == 'doctor')
+      <p>
+        Estás a punto de cancelar tu cita con el paciente 
+        {{ $appointment->patient->name }} 
+        (especialidad {{ $appointment->specialty->name }}) 
+        para el día {{ $appointment->scheduled_date }}
+        (hora {{ $appointment->scheduled_time_12 }}):
+      </p>
+      @else
+      <p>
+        Estás a punto de cancelar la cita reservada 
+        por el paciente {{ $appointment->patient->name }}  
+        para ser atendido por el médico {{ $appointment->doctor->name }} 
+        (especialidad {{ $appointment->specialty->name }}) 
+        el día {{ $appointment->scheduled_date }}
+        (hora {{ $appointment->scheduled_time_12 }}):
+      </p>
+      @endif
       
         <form action="{{ url('/appointments/'.$appointment->id.'/cancel') }}" method="POST">
         @csrf

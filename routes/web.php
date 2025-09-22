@@ -56,6 +56,14 @@ Route::resource('/doctors', DoctorController::class);
 
 Route::resource('/patients', PatientController::class);
 
+// Charts
+	//Antiguo
+	//Route::get('/charts/appointments/line', 'ChartController@appointments');
+	Route::get('/charts/appointments/line', [\App\Http\Controllers\Admin\ChartController::class, 'appointments']);
+
+	//Route::get('/charts/doctors/column', 'ChartController@doctors');
+	//Route::get('/charts/doctors/column/data', 'ChartController@doctorsJson');
+
 });
 Route::middleware(['auth','doctor'])->group(function () {
 
