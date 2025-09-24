@@ -5,6 +5,7 @@ use Illuminate\Database\Seeder;
 use App\Models\User;
 use App\Models\Specialty;
 use App\Models\WorkDay;
+use App\Models\Appointment;
 
 class DatabaseSeeder extends Seeder
 {
@@ -72,7 +73,9 @@ class DatabaseSeeder extends Seeder
 
 		        'user_id' => 3 // Médico Test (UsersTableSeeder)
         	]);
-        }        
+        }  
+        
+        Appointment::factory(300)->create();
     }
 
 }
