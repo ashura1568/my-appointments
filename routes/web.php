@@ -104,8 +104,7 @@ Route::middleware('auth')->group(function () {
 
 	Route::post('/appointments/{appointment}/confirm', [\App\Http\Controllers\AppointmentController::class, 'postConfirm']);
 
-    Route::get('/specialties/{specialty}/doctors', [\App\Http\Controllers\Api\SpecialtyController::class, 'doctors']);
-    Route::get('/schedule/hours', [\App\Http\Controllers\Api\ScheduleController::class, 'hours']);
+    
 });
 
 
