@@ -93,6 +93,8 @@ Route::middleware('auth')->group(function () {
 
 	Route::post('/appointments/{appointment}/confirm', 'AppointmentController@postConfirm');*/
 
+	//Route::post('/appointments/{appointment}/confirm', 'AppointmentController@postConfirm');
+
     Route::get('/appointments/create', [\App\Http\Controllers\AppointmentController::class, 'create']);
     Route::post('/appointments', [\App\Http\Controllers\AppointmentController::class, 'store']);
 	Route::get('/appointments', [\App\Http\Controllers\AppointmentController::class, 'index']);
