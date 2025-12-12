@@ -4,6 +4,10 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AuthController;
 //use App\Http\Controllers\Controller;
 
+//Route::post('/login', 'AuthController@login');
+Route::post('/login', [\App\Http\Controllers\Api\AuthController::class, 'login']);
+Route::post('/register', 'AuthController@register');
+
 //Public resources
 Route::get('/specialties', [\App\Http\Controllers\Api\SpecialtyController::class, 'index']);
 Route::get('/specialties/{specialty}/doctors', [\App\Http\Controllers\Api\SpecialtyController::class, 'doctors']);
@@ -13,7 +17,7 @@ Route::prefix('auth')->group(function () {
     Route::post('register', [AuthController::class, 'register']);
 
     //Route::post('/register', [\App\Http\Controllers\Api\AuthController::class, 'register']);
-    Route::post('login', [AuthController::class, 'login']);
+    //Route::post('login', [AuthController::class, 'login']);
 
     
 

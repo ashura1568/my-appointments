@@ -41,6 +41,20 @@ class AuthController extends Controller
         }
 
         return $this->respondWithToken($token);
+
+        /*if (Auth::guard('api')->attempt($credentials)) {
+		    $user = Auth::guard('api')->user();
+		    $jwt = JwtAuth::generateToken($user);
+		    $success = true;
+		    
+		    // Return successfull sign in response with the generated jwt.
+		    return compact('success', 'user', 'jwt');
+		} else {
+		    // Return response for failed attempt.
+			$success = false;
+			$message = 'Invalid credentials';
+			return compact('success', 'message');
+		}*/
     }
 
     // Get user profile
