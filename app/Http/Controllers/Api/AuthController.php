@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Auth;
 
 class AuthController extends Controller
 {
@@ -34,14 +35,14 @@ class AuthController extends Controller
     // Login user and return JWT token
     public function login(Request $request)
     {
-        /*$credentials = $request->only('email', 'password');
+        $credentials = $request->only('email', 'password');
 
-        if (!$token = auth('api')->attempt($credentials)) {
+        /*if (!$token = auth('api')->attempt($credentials)) {
             return response()->json(['error' => 'Unauthorized'], 401);
         }
 
         return $this->respondWithToken($token);*/
-        return "hola";
+        //return "hola";
 
         /*if (Auth::guard('api')->attempt($credentials)) {
 		    $user = Auth::guard('api')->user();
@@ -56,6 +57,21 @@ class AuthController extends Controller
 			$message = 'Invalid credentials';
 			return compact('success', 'message');
 		}*/
+
+        if (Auth::guard('api')->attempt($credentials)) {
+		    $user = Auth::guard('api')->user();
+		    $jwt = auth('api')->attempt($credentials);
+		    $success = true;
+		    
+		    // Return successfull sign in response with the generated jwt.
+		    return compact('success', 'user', 'jwt');
+            //return compact('success', 'user');
+		} else {
+		    // Return response for failed attempt.
+			$success = false;
+			$message = 'Invalid credentials';
+			return compact('success', 'message');
+		}
     }
 
     // Get user profile
