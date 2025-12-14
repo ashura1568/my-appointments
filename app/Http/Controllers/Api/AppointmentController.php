@@ -6,9 +6,10 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 use Auth;
+use App\Models\Appointment;
 //use App\Appointment;
 
-//use App\Http\Requests\StoreAppointment;
+use App\Http\Requests\StoreAppointment;
 
 class AppointmentController extends Controller
 {
@@ -65,5 +66,9 @@ class AppointmentController extends Controller
     		$success = false;
 
     	return compact('success');*/
+
+		$success = Appointment::createForPatient($request, auth()->id());
+
+		return compact('success');
     }
 }
