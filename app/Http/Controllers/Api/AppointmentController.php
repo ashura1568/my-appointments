@@ -67,7 +67,9 @@ class AppointmentController extends Controller
 
     	return compact('success');*/
 
-		$success = Appointment::createForPatient($request, auth()->id());
+		$patientId = Auth::guard('api')->id();
+
+		$success = Appointment::createForPatient($request, $patientId);
 
 		return compact('success');
     }
