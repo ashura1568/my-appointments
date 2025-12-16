@@ -7,6 +7,8 @@ use App\Http\Controllers\Api\AuthController;
 
 //Route::post('/login', 'AuthController@login');
 Route::post('/login', [\App\Http\Controllers\Api\AuthController::class, 'login']);
+//Route::post('/register', 'AuthController@register');
+Route::post('/register', [\App\Http\Controllers\Api\AuthController::class, 'register']);
 
 
 //Public resources

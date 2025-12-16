@@ -3,36 +3,20 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Models\User;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Auth\Events\Registered;
+use App\Http\Traits\ValidateAndCreatePatient;
+
 use Auth;
+use JwtAuth;
+use App\Models\User;
 
 class AuthController extends Controller
 {
-    // Register new user
-    public function register(Request $request)
-    {
-        $validator = Validator::make($request->all(), [
-            'name'       => 'required|string|max:255',
-            'email'      => 'required|string|email|max:255|unique:users',
-            'password'   => 'required|string|min:6|confirmed',
-        ]);
-
-        if ($validator->fails()) {
-            return response()->json(['errors' => $validator->errors()], 422);
-        }
-
-        $user = User::create([
-            'name'     => $request->name,
-            'email'    => $request->email,
-            'password' => bcrypt($request->password),
-        ]);
-
-        return response()->json(['message' => 'User registered successfully', 'user' => $user], 201);
-    }
-
-    // Login user and return JWT token
+    use ValidateAndCreatePatient;
+        // Login user and return JWT token
     public function login(Request $request)
     {
         $credentials = $request->only('email', 'password');
@@ -74,19 +58,56 @@ class AuthController extends Controller
 		}
     }
 
-    // Get user profile
-    public function profile()
-    {
-        return response()->json(auth('api')->user());
-    }
-
-    // Logout user (invalidate token)
+        // Logout user (invalidate token)
     public function logout()
     {
         auth('api')->logout();
 
         return response()->json(['message' => 'Successfully logged out']);
     }
+    // Register new user
+    public function register(Request $request)
+    {
+        /*$validator = Validator::make($request->all(), [
+            'name'       => 'required|string|max:255',
+            'email'      => 'required|string|email|max:255|unique:users',
+            'password'   => 'required|string|min:6|confirmed',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 422);
+        }
+
+        $user = User::create([
+            'name'     => $request->name,
+            'email'    => $request->email,
+            'password' => bcrypt($request->password),
+        ]);
+
+        return response()->json(['message' => 'User registered successfully', 'user' => $user], 201);*/
+
+        //$credentials = $request->only('email', 'password');
+
+        $this->validator($request->all())->validate();
+
+        event(new Registered($user = $this->create($request->all())));
+
+        Auth::guard('api')->login($user);
+        //$jwt = auth('api')->attempt($credentials);
+        //$jwt = JwAuth::generateToken($user);
+        //$success = true;
+
+        //return compact('sucess','user','jwt');
+        return compact('user');
+    }
+
+    // Get user profile
+    public function profile()
+    {
+        return response()->json(auth('api')->user());
+    }
+
+
 
     // Refresh JWT token
     public function refresh()
