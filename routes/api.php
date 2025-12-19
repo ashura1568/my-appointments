@@ -25,6 +25,11 @@ Route::post('/logout', [\App\Http\Controllers\Api\AuthController::class, 'logout
 Route::get('/appointments', [\App\Http\Controllers\Api\AppointmentController::class, 'index']);
 Route::post('/appointments', [\App\Http\Controllers\Api\AppointmentController::class, 'store']);
 
+// fcm
+//Route::post('/fcm/token', 'FirebaseController@postToken');
+Route::post('/fcm/token', [\App\Http\Controllers\Api\FirebaseController::class, 'postToke']);
+
+
     
 });
 
