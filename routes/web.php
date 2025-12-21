@@ -67,6 +67,10 @@ Route::resource('/patients', PatientController::class);
 	//Route::get('/charts/doctors/column/data', 'ChartController@doctorsJson');
 	Route::get('/charts/doctors/column/data', [\App\Http\Controllers\Admin\ChartController::class, 'doctorsJson']);
 
+	// FCM (Firebase Cloud Messaging)
+	//Route::post('/fcm/send', 'FirebaseController@sendAll');
+	Route::post('/fcm/send', [\App\Http\Controllers\Admin\FirebaseController::class, 'sendAll']);
+
 });
 Route::middleware(['auth','doctor'])->group(function () {
 

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "0399d03d4be02eca82b30f344bc8cbbb",
+    "content-hash": "5499ef83d1c8b24c81245389f493a669",
     "packages": [
         {
             "name": "brick/math",
@@ -1336,6 +1336,43 @@
                 }
             ],
             "time": "2025-08-22T14:27:06+00:00"
+        },
+        {
+            "name": "kawankoding/laravel-fcm",
+            "version": "0.0.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/kawankoding/laravel-fcm.git",
+                "reference": "558d28245b71c7e3c7f8f556e287f58d86292909"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/kawankoding/laravel-fcm/zipball/558d28245b71c7e3c7f8f556e287f58d86292909",
+                "reference": "558d28245b71c7e3c7f8f556e287f58d86292909",
+                "shasum": ""
+            },
+            "type": "library",
+            "autoload": {
+                "files": [
+                    "src/Kawankoding/Fcm/helpers.php"
+                ],
+                "psr-4": {
+                    "Kawankoding\\Fcm\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "authors": [
+                {
+                    "name": "Muhammad Amirul Ihsan",
+                    "email": "muh.amirul.ihsan@gmail.com"
+                }
+            ],
+            "description": "A package to send Firebase notification cross Laravel Application",
+            "support": {
+                "issues": "https://github.com/kawankoding/laravel-fcm/issues",
+                "source": "https://github.com/kawankoding/laravel-fcm/tree/master"
+            },
+            "time": "2017-08-07T09:15:12+00:00"
         },
         {
             "name": "laravel/framework",

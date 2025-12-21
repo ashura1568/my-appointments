@@ -5,6 +5,10 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
+use App\Models\User;
+use Auth;
+
+
 class FirebaseController extends Controller
 {
     //$request->validate($rules)

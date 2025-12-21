@@ -8,6 +8,7 @@
     "require": {
         "php": "^8.2",
         "doctrine/dbal": "^4.3",
+        "kawankoding/laravel-fcm": "^0.0.4",
         "laravel/framework": "^12.0",
         "laravel/passport": "^13.4",
         "laravel/sanctum": "^4.0",
