@@ -19,6 +19,12 @@ Route::get('/schedule/hours', [\App\Http\Controllers\Api\ScheduleController::cla
 Route::middleware('auth:api')->group(function () {
 
 //Route::get('/user', [\App\Http\Controllers\Api\UserController::class, 'hours']);
+Route::post('/user', 'UserController@update');
+Route::post('/user', 'UserController@update');
+
+Route::post('/user', [\App\Http\Controllers\Api\UserController::class, 'show']);
+Route::post('/user', [\App\Http\Controllers\Api\UserController::class, 'update']);
+
 Route::post('/logout', [\App\Http\Controllers\Api\AuthController::class, 'logout']);
 
 //appointments
