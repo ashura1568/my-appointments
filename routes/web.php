@@ -5,7 +5,9 @@ use App\Http\Controllers\Admin\DoctorController;
 use App\Http\Controllers\Admin\PatientController;
 use App\Http\Controllers\Doctor\ScheduleController;
 use App\Http\Controllers\AppointmentController;
+use App\Http\Controllers\UserController;
 use App\Http\Middleware\MiMiddlewarePersonalizado;
+//use App\Http\Middleware\PhoneMiddleware;
 
 Route::get('/', function () {
 	return redirect('/login');
@@ -81,26 +83,17 @@ Route::post('/schedule', [\App\Http\Controllers\Doctor\ScheduleController::class
 });
 
 Route::middleware('auth')->group(function () {
-	/*Route::get('/profile', 'UserController@edit');
-	Route::post('/profile', 'UserController@update');
+	//Route::get('/profile', 'UserController@edit');
+	//Route::post('/profile', 'UserController@update');
 
-	Route::middleware('phone')->group(function () {	
-		Route::get('/appointments/create', 'AppointmentController@create');
-		Route::post('/appointments', 'AppointmentController@store');
-	});*/
-
-	/*Route::get('/appointments', 'AppointmentController@index');	
-	Route::get('/appointments/{appointment}', 'AppointmentController@show');
-
-	Route::get('/appointments/{appointment}/cancel', 'AppointmentController@showCancelForm');
-	Route::post('/appointments/{appointment}/cancel', 'AppointmentController@postCancel');
-
-	Route::post('/appointments/{appointment}/confirm', 'AppointmentController@postConfirm');*/
-
-	//Route::post('/appointments/{appointment}/confirm', 'AppointmentController@postConfirm');
+	//Route::middleware('phone')->group(function () {
+		Route::get('/profile', [\App\Http\Controllers\UserController::class, 'edit']);
+		Route::post('/profile', [\App\Http\Controllers\UserController::class, 'update']);
+	//});	
 
     Route::get('/appointments/create', [\App\Http\Controllers\AppointmentController::class, 'create']);
     Route::post('/appointments', [\App\Http\Controllers\AppointmentController::class, 'store']);
+
 	Route::get('/appointments', [\App\Http\Controllers\AppointmentController::class, 'index']);
 
 	Route::get('/appointments/{appointment}', [\App\Http\Controllers\AppointmentController::class, 'show']);
